@@ -151,5 +151,17 @@ class ProductLineApiTest {
             .andExpect(status().isNotFound());
     }
 
-    
+    // ── Cleanup ─────────────────────────────────────────────────────────────
+
+    @Test @Order(99)
+    void cleanup_deleteTestProductLine() throws Exception {
+        mockMvc.perform(delete("/api/productlines/" + TEST_LINE))
+            .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test @Order(100)
+    void cleanup_verifyTestProductLineGone() throws Exception {
+        mockMvc.perform(get("/api/productlines/" + TEST_LINE))
+            .andExpect(status().isNotFound());
+    }
 }

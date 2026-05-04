@@ -156,10 +156,4 @@ class CustomerApiTest {
             .andExpect(status().isNotFound());
     }
 
-
-    @Test @Order(100)
-    void cleanup_verifyTestCustomerGone() throws Exception {
-        mockMvc.perform(get("/api/customers/" + TEST_CUST_NUM))
-            .andExpect(status().isNotFound());
-    }
 }

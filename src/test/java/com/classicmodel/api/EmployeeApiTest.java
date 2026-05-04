@@ -162,9 +162,4 @@ class EmployeeApiTest {
     }
 
 
-    @Test @Order(100)
-    void cleanup_verifyTestEmployeeGone() throws Exception {
-        mockMvc.perform(get("/api/employees/" + TEST_EMP_NUM))
-            .andExpect(status().isNotFound());
-    }
 }

@@ -23,6 +23,7 @@ public class RepositoryConfig implements RepositoryRestConfigurer {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+
         config.exposeIdsFor(
             Office.class,
             Employee.class,
@@ -34,13 +35,16 @@ public class RepositoryConfig implements RepositoryRestConfigurer {
             Product.class
         );
 
+        // 🔥 CRITICAL FIX (this was missing)
+        config.setReturnBodyOnCreate(true);
+        config.setReturnBodyOnUpdate(true);
+
         cors.addMapping("/api/**")
             .allowedOriginPatterns("*")
             .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
             .allowedHeaders("*")
             .allowCredentials(false);
     }
-
 
     @Bean
     public FilterRegistrationBean<CorsFilter> globalCorsFilter() {
