@@ -24,20 +24,23 @@ public class RepositoryConfig implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         config.exposeIdsFor(
-                Office.class,
-                Employee.class,
-                Customer.class,
-                Order.class,
-                ProductLine.class,
-                Product.class
+            Office.class,
+            Employee.class,
+            Customer.class,
+            Order.class,
+            OrderDetail.class,
+            Payment.class,
+            ProductLine.class,
+            Product.class
         );
 
         cors.addMapping("/api/**")
-                .allowedOriginPatterns("*")
-                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
-                .allowCredentials(false);
+            .allowedOriginPatterns("*")
+            .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(false);
     }
+
 
     @Bean
     public FilterRegistrationBean<CorsFilter> globalCorsFilter() {
@@ -50,16 +53,13 @@ public class RepositoryConfig implements RepositoryRestConfigurer {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
-        FilterRegistrationBean<CorsFilter> bean =
-                new FilterRegistrationBean<>(new CorsFilter(source));
+        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return bean;
     }
 
     @Override
-    public void configureValidatingRepositoryEventListener(
-            ValidatingRepositoryEventListener validatingListener) {
-
+    public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {
         validatingListener.addValidator("beforeCreate", validator);
         validatingListener.addValidator("beforeSave", validator);
     }
