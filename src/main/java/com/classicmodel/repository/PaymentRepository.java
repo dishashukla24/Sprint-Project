@@ -17,5 +17,6 @@ public interface PaymentRepository extends JpaRepository<Payment, PaymentId> {
     List<Payment> findByPaymentDate(LocalDate paymentDate);
 
     List<Payment> findById_CheckNumber(String checkNumber);
+    long count();
 
 }
